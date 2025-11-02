@@ -8,7 +8,7 @@ Generate the shortest sequence of operations to change string A into string B.
 
    ```yaml
    dependencies:
-     diff:
+     string_diff:
        github: plambert/string_diff.cr
    ```
 
