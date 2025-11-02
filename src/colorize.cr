@@ -3,7 +3,7 @@ module Colorize
     if enabled.nil?
       yield
     else
-      save_enabled = Colorize.enabled
+      save_enabled = Colorize.enabled?
       begin
         Colorize.enabled = enabled
         yield
