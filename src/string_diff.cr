@@ -92,11 +92,9 @@ class StringDiff
   end
 
   def to_s(io, *, enable_color : Bool? = nil)
-    diffs = StringDiff.new(from, to).ops
-
     Colorize.with enable_color do
       io << "- "
-      diffs.each do |entry|
+      ops.each do |entry|
         case entry.op
         in .copy?
           io << entry.text
@@ -111,7 +109,7 @@ class StringDiff
       io << '\n'
 
       io << "+ "
-      diffs.each do |entry|
+      ops.each do |entry|
         case entry.op
         in .copy?
           io << entry.text
