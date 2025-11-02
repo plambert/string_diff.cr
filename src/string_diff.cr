@@ -11,9 +11,9 @@ class StringDiff
 
   getter first : String
   getter second : String
-  getter ops : Array(OpToken)
   getter? include_copy : Bool
   getter? optimize : Bool
+  @ops : Array(OpToken)
 
   # ameba:disable Metrics/CyclomaticComplexity
   def initialize(@first, @second, @include_copy = false, @optimize = true)
@@ -51,7 +51,7 @@ class StringDiff
     y = second_size
     while x > 0 || y > 0
       if x > 0 && y > 0 && first[x - 1] == second[y - 1]
-        simple_ops << OpToken.new op: OpType::Copy, text: @second[y - 1, 1] if include_copy?
+        simple_ops << OpToken.new op: OpType::Copy, text: @second[y - 1, 1]
         x -= 1
         y -= 1
       elsif x > 0 && y > 0 && table[x, y] == table[x - 1, y - 1] + 1
@@ -84,6 +84,14 @@ class StringDiff
       @ops << last
     else
       @ops = simple_ops.reverse!
+    end
+  end
+
+  def ops
+    if include_copy?
+      @ops
+    else
+      @ops.select { |entry| !entry.op.copy? }
     end
   end
 
