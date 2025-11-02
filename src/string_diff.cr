@@ -92,7 +92,7 @@ class StringDiff
   end
 
   def to_s(io, *, enable_color : Bool? = nil)
-    diffs = Diff.new(from, to).ops
+    diffs = StringDiff.new(from, to).ops
 
     Colorize.with enable_color do
       io << "- "
